@@ -12,7 +12,7 @@ type PropsType = {
     title: string
     tasks: Array<TasksType>
     removeTask: (taskId: string, todolistId: string) => void
-    changeFilter: (value: FilterValuesType, todolistId: string) => void
+    changeFilter: (payload:{filter: FilterValuesType, todolistId: string}) => void
     addTask: (title: string, todolistId: string) => void
     changeTaskStatus: (id: string, isDone: boolean, todolistId: string) => void
     removeTodolist: (id: string) => void
@@ -46,9 +46,9 @@ export const Todolist = (props: PropsType)=> {
 
     const removeTodolist = () => props.removeTodolist(props.id)
 
-    const onAllClickHandler = () => props.changeFilter("all", props.id);
-    const onActiveClickHandler = () => props.changeFilter("active", props.id);
-    const onCompletedClickHandler = () => props.changeFilter("completed", props.id);
+    const onAllClickHandler = () => props.changeFilter({filter:"all", todolistId:props.id});
+    const onActiveClickHandler = () => props.changeFilter({filter:"active", todolistId:props.id});
+    const onCompletedClickHandler = () => props.changeFilter({filter:"completed", todolistId:props.id});
 
     return <div>
         <h3> {props.title}
@@ -69,10 +69,10 @@ export const Todolist = (props: PropsType)=> {
                     const onClickHandler = () => props.removeTask(t.taskId, props.id)
                     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
                         let newIsDoneValue = e.currentTarget.checked;
-                        props.changeTaskStatus(t.id, newIsDoneValue, props.id);
+                        props.changeTaskStatus(t.taskId, newIsDoneValue, props.id);
                     }
 
-                    return <li key={t.id} className={t.isDone ? "is-done" : ""}>
+                    return <li key={t.taskId} className={t.isDone ? "is-done" : ""}>
                         <input type="checkbox" onChange={onChangeHandler} checked={t.isDone}/>
                         <span>{t.title}</span>
                         <button onClick={onClickHandler}>x</button>
