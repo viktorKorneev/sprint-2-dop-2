@@ -188,6 +188,7 @@ export const App = () => {
     // type changeFilterType = {filter: FilterValuesType, todolistId: string}
 
     function removeTodolist(id: string) {
+        setTodos(prevState => prevState.filter(td => td.todolistId !== id));
         // // засунем в стейт список тудулистов, id которых не равны тому, который нужно выкинуть
         // setTodolists(todolists.filter(tl => tl.id != id));
         // // удалим таски для этого тудулиста из второго стейта, где мы храним отдельно таски
